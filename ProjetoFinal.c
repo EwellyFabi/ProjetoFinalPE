@@ -31,13 +31,17 @@ void inserirValores(Cheque *c, int n){
 }
 
 void imprimirValores(Cheque *c, int n){
+    int i=0;
 
-    printf("Numero do cheque: %d\n", c[n].numero);
-    printf("Numero da agencia: %d\n", c[n].agencia);
-    printf("Numero da conta corrente: %d\n", c[n].numeroDaConta);
-    printf("Digito verificador: %d\n", c[n].DV);
-    printf("Nome: %s\n", c[n].nome);
-    printf("Valor do cheque: %.2f\n", c[n].valor);
+    for(i=0;i<n;i++){
+        printf("\n          Cheque 0%d          \n\n",i+1);
+        printf("Numero do cheque: %d\n", c[i].numero);
+        printf("Numero da agencia: %d\n", c[i].agencia);
+        printf("Numero da conta corrente: %d\n", c[i].numeroDaConta);
+        printf("Digito verificador: %d\n", c[i].DV);
+        printf("Nome: %s\n", c[i].nome);
+        printf("Valor do cheque: %.2f\n", c[i].valor);
+    }
 }
 
 /*Função que conta quantos digitos tem um numero inteiro e retorna essa quantidade*/
@@ -131,8 +135,8 @@ int validarDV(int nConta,int DV){
 }
 
 int main(){
-    int n=0;
-    int i=1;
+    int n=0; /*posição do valor apontado por c*/
+    int i=1; /*numero de cheques*/
 
     /*c *file = (Cheque *) malloc (i*sizeof(Cheque));*/
 
@@ -151,28 +155,24 @@ int main(){
         DV = validarDV(nConta,DV);/*Chama a função validarDV*/
         /*Se o Digito Verificador for validado, a função armazena o registro */
         if(DV==0){
-            printf("Realizado com sucesso");
+            printf("Registro realizado com sucesso!");
 
 
-
-
-            /*imprimirValores(c,n);*/
-
+            n++;
+            i++;
+            c = (Cheque *) realloc (c, i * sizeof(Cheque));/*Realoca memória para c*/
         }else{
             printf("Desculpe-me! Digito verificador invalido, por favor realize a operacao novamente!");
-            i--;
         }
-        free(c);/*Limpa a memória que havia sido alocada para o ponteiro c*/
-        printf("\n");
-        i++;
 
-        c = (Cheque *) realloc (c, i * sizeof(Cheque));/*Realoca memória para c*/
         printf("\n          Cheque 0%d          \n\n",i);
         printf("Digite o numero do cheque: ");
         scanf("%d",&c[n].numero);
     }
 
     imprimirValores(c,n);
+
+    free(c);/*Limpa a memória que havia sido alocada para o ponteiro c*/
 
     return 0;
 }
